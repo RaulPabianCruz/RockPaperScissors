@@ -7,6 +7,8 @@ const LOSE_RESULT = "You Lose!";
 const PAPER_BEATS_ROCK = " Paper beats Rock!";
 const ROCK_BEATS_SCISSORS = " Rock beats Scissors!";
 const SCISSORS_BEATS_PAPER = " Scissors beats Paper!";
+const USER_CHOICE_PROMPT = "Rock Paper Scissors! Please enter a choice: ";
+const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scissors: ";
 
 function getComputerChoice(){
     let randChoice = Math.floor(Math.random() * 3) + 1;
@@ -46,4 +48,21 @@ function playRound(playerSelection, compSelection){
         else
             return WIN_RESULT + SCISSORS_BEATS_PAPER;
     }
+}
+
+function game(){
+    
+}
+
+function promptUserChoice(){
+    let userChoice = prompt(USER_CHOICE_PROMPT);
+    if(userChoice !== null)
+        userChoice = userChoice.toUpperCase();
+    while(userChoice !== CHOICE_ROCK && userChoice !== CHOICE_PAPER
+            && userChoice !== CHOICE_SCISSORS){
+        userChoice = prompt(RETRY_CHOICE_PROMPT);
+        if(userChoice !== null)
+            userChoice = userChoice.toUpperCase();
+    }
+    return userChoice;
 }
