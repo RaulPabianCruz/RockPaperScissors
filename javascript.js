@@ -1,9 +1,9 @@
 const CHOICE_ROCK = "ROCK";
 const CHOICE_PAPER = "PAPER";
 const CHOICE_SCISSORS = "SCISSORS";
-const TIE_RESULT = "Tie Round!";
-const WIN_RESULT = "You Win!";
-const LOSE_RESULT = "You Lose!";
+const TIE_MESSAGE = "Tie Round!";
+const WIN_MESSAGE = "You Win!";
+const LOSE_MESSAGE = "You Lose!";
 const PAPER_BEATS_ROCK = " Paper beats Rock!";
 const ROCK_BEATS_SCISSORS = " Rock beats Scissors!";
 const SCISSORS_BEATS_PAPER = " Scissors beats Paper!";
@@ -31,24 +31,24 @@ function getComputerChoice(){
 
 function playRound(playerSelection, compSelection){
     if(playerSelection === compSelection)
-        return TIE_RESULT;
+        return TIE_MESSAGE;
     else if(playerSelection === CHOICE_ROCK){
         if(compSelection === CHOICE_PAPER)
-            return LOSE_RESULT + PAPER_BEATS_ROCK;
+            return LOSE_MESSAGE + PAPER_BEATS_ROCK;
         else
-            return WIN_RESULT + ROCK_BEATS_SCISSORS;
+            return WIN_MESSAGE + ROCK_BEATS_SCISSORS;
     }
     else if(playerSelection === CHOICE_PAPER){
         if(compSelection === CHOICE_SCISSORS)
-            return LOSE_RESULT + SCISSORS_BEATS_PAPER;
+            return LOSE_MESSAGE + SCISSORS_BEATS_PAPER;
         else
-            return WIN_RESULT + PAPER_BEATS_ROCK;
+            return WIN_MESSAGE + PAPER_BEATS_ROCK;
     }
     else{
         if(compSelection === CHOICE_ROCK)
-            return LOSE_RESULT + ROCK_BEATS_SCISSORS;
+            return LOSE_MESSAGE + ROCK_BEATS_SCISSORS;
         else
-            return WIN_RESULT + SCISSORS_BEATS_PAPER;
+            return WIN_MESSAGE + SCISSORS_BEATS_PAPER;
     }
 }
 
@@ -66,9 +66,9 @@ function game(){
 
         console.log(roundResult);
 
-        if(roundResult.includes(WIN_RESULT))
+        if(roundResult.includes(WIN_MESSAGE))
             userScore++;
-        else if(roundResult.includes(LOSE_RESULT))
+        else if(roundResult.includes(LOSE_MESSAGE))
             compScore++;
     }
 
@@ -92,9 +92,11 @@ function promptUserChoice(){
 
 function displayResults(userScore, compScore){
     if(userScore > compScore)
-        console.log(WIN_RESULT + " You beat the computer!");
+        console.log(WIN_MESSAGE + " You beat the computer!");
     else if(compScore > userScore)
-        console.log(LOSE_RESULT + " The computer beat you!");
+        console.log(LOSE_MESSAGE + " The computer beat you!");
     else
         console.log("Tie Result!");
 }
+
+game()
