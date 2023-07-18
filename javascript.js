@@ -13,6 +13,7 @@ const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scisso
 function getComputerChoice(){
     let randChoice = Math.floor(Math.random() * 3) + 1;
     let compChoice;
+
     switch(randChoice) {
         case 1: 
             compChoice = CHOICE_ROCK;
@@ -24,6 +25,7 @@ function getComputerChoice(){
             compChoice = CHOICE_SCISSORS;
             break;
     }
+
     return compChoice;
 }
 
@@ -51,18 +53,48 @@ function playRound(playerSelection, compSelection){
 }
 
 function game(){
-    
+    let userScore = 0;
+    let compScore = 0;
+
+    console.log("Five Rounds of Rock, Paper, Scissors! Oh Boy!");
+
+    for(let i = 1; i < 6; i++){
+        console.log("Round " + i + ":");
+        let userChoice = promptUserChoice();
+        let compChoice = getComputerChoice();
+        let roundResult = playRound(userChoice, compChoice);
+
+        console.log(roundResult);
+
+        if(roundResult.includes(WIN_RESULT))
+            userScore++;
+        else if(roundResult.includes(LOSE_RESULT))
+            compScore++;
+    }
+
+    displayResults(userScore, compScore);
 }
 
 function promptUserChoice(){
     let userChoice = prompt(USER_CHOICE_PROMPT);
     if(userChoice !== null)
         userChoice = userChoice.toUpperCase();
+
     while(userChoice !== CHOICE_ROCK && userChoice !== CHOICE_PAPER
             && userChoice !== CHOICE_SCISSORS){
         userChoice = prompt(RETRY_CHOICE_PROMPT);
         if(userChoice !== null)
             userChoice = userChoice.toUpperCase();
     }
+
     return userChoice;
+}
+
+function displayResults(userScore, compScore){
+    if(userScore > compScore)
+        console.log(WIN_RESULT + " You beat the computer!");
+    else if(compScore > userScore)
+        console.log(LOSE_RESULT + " The computer beat you!");
+    else
+        console.log("Tie Result!");
 }
