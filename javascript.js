@@ -52,6 +52,7 @@ function playRound(playerSelection, compSelection){
     }
 }
 
+/*
 function game(){
     let userScore = 0;
     let compScore = 0;
@@ -74,6 +75,7 @@ function game(){
 
     displayResults(userScore, compScore);
 }
+*/
 
 function promptUserChoice(){
     let userChoice = prompt(USER_CHOICE_PROMPT);
@@ -99,4 +101,29 @@ function displayResults(userScore, compScore){
         console.log("Tie Result!");
 }
 
-game()
+function addBttnEvntListener(button) {
+    button.addEventListener("click", giveUserChoice);
+    //console.log("event listener addded :)");
+}
+
+function giveUserChoice(event) {
+    let userChoice = "";
+    switch(event.target.id){
+        case "rock":
+            userChoice = CHOICE_ROCK;
+            break;
+        case "paper":
+            userChoice = CHOICE_PAPER;
+            break;
+        default: 
+            userChoice = CHOICE_SCISSORS
+            break;
+    }
+    console.log(userChoice);
+    console.log(playRound(userChoice));
+}
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(addBttnEvntListener);
+
+//game()
