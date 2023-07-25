@@ -13,12 +13,26 @@
                 <h1>Rock-Paper-Scissors!</h1>
             </div>
             <div class="info-container">
-                <p class="round-result">- - - - - - - -</p>
+                <h1 class="round-message">- - - - - - - -</h1>
+                <div class="scoreboard">
+                    <div class="score user">
+                        <h2>You:</h2>
+                        <p class="points">0</p>
+                    </div>
+                    <div class="score comp">
+                        <h2>Comp:</h2>
+                        <p class="points">0</p>
+                    </div>
+                </div>
             </div>
             <div class="btn-container">
-                <button id="rock">Rock</button>
-                <button id="paper">Paper</button>
-                <button id="scissors">Scissors</button>
+                <button id="rock" class="choice">Rock</button>
+                <button id="paper" class="choice">Paper</button>
+                <button id="scissors" class="choice">Scissors</button>
+            </div>
+            <div class="footer">
+                <button class="submit">Submit</button>
+                <button class="reset">Reset</button>
             </div>
         </div>
     </body>

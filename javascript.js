@@ -8,7 +8,8 @@ const PAPER_BEATS_ROCK = " Paper beats Rock!";
 const ROCK_BEATS_SCISSORS = " Rock beats Scissors!";
 const SCISSORS_BEATS_PAPER = " Scissors beats Paper!";
 const USER_CHOICE_PROMPT = "Rock Paper Scissors! Please enter a choice: ";
-const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scissors: ";
+//const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scissors: ";
+let userChoice = "";
 
 function getComputerChoice(){
     let randChoice = Math.floor(Math.random() * 3) + 1;
@@ -30,25 +31,48 @@ function getComputerChoice(){
 }
 
 function playRound(playerSelection, compSelection){
+    let roundResult = "";
+    const roundMessage = document.querySelector(".round-message");
+
     if(playerSelection === compSelection)
-        return TIE_MESSAGE;
+        roundResult = TIE_MESSAGE;
     else if(playerSelection === CHOICE_ROCK){
         if(compSelection === CHOICE_PAPER)
-            return LOSE_MESSAGE + PAPER_BEATS_ROCK;
+            roundResult = LOSE_MESSAGE + PAPER_BEATS_ROCK;
         else
-            return WIN_MESSAGE + ROCK_BEATS_SCISSORS;
+            roundResult = WIN_MESSAGE + ROCK_BEATS_SCISSORS;
     }
     else if(playerSelection === CHOICE_PAPER){
         if(compSelection === CHOICE_SCISSORS)
-            return LOSE_MESSAGE + SCISSORS_BEATS_PAPER;
+            roundResult = LOSE_MESSAGE + SCISSORS_BEATS_PAPER;
         else
-            return WIN_MESSAGE + PAPER_BEATS_ROCK;
+            roundResult = WIN_MESSAGE + PAPER_BEATS_ROCK;
     }
     else{
         if(compSelection === CHOICE_ROCK)
-            return LOSE_MESSAGE + ROCK_BEATS_SCISSORS;
+            roundResult = LOSE_MESSAGE + ROCK_BEATS_SCISSORS;
         else
-            return WIN_MESSAGE + SCISSORS_BEATS_PAPER;
+            roundResult = WIN_MESSAGE + SCISSORS_BEATS_PAPER;
+    }
+
+    roundMessage.textContent = roundResult;
+    updateScoreboard(roundResult);
+    
+}
+
+function updateScoreboard(roundResult) {
+    let newScore;
+    if(roundResult.includes(WIN_MESSAGE)){
+        const userScore = document.querySelector(".user .points");
+        newScore = Number(userScore.textContent);
+        newScore++;
+        userScore.textContent = newScore;
+    }
+    else if(roundResult.includes(LOSE_MESSAGE)){
+        const compScore = document.querySelector(".comp .points");
+        newScore = Number(compScore.textContent);
+        newScore++;
+        compScore.textContent = newScore;
     }
 }
 
@@ -77,6 +101,7 @@ function game(){
 }
 */
 
+/*
 function promptUserChoice(){
     let userChoice = prompt(USER_CHOICE_PROMPT);
     if(userChoice !== null)
@@ -91,6 +116,7 @@ function promptUserChoice(){
 
     return userChoice;
 }
+*/
 
 function displayResults(userScore, compScore){
     if(userScore > compScore)
@@ -102,12 +128,10 @@ function displayResults(userScore, compScore){
 }
 
 function addBttnEvntListener(button) {
-    button.addEventListener("click", giveUserChoice);
-    //console.log("event listener addded :)");
+    button.addEventListener("click", getUserChoice);
 }
 
-function giveUserChoice(event) {
-    let userChoice = "";
+function getUserChoice(event) {
     switch(event.target.id){
         case "rock":
             userChoice = CHOICE_ROCK;
@@ -119,11 +143,22 @@ function giveUserChoice(event) {
             userChoice = CHOICE_SCISSORS
             break;
     }
-    console.log(userChoice);
-    console.log(playRound(userChoice));
+    playRound(userChoice, getComputerChoice());
 }
 
-const buttons = document.querySelectorAll("button");
+function clearScoreboard(){
+    const scores = document.querySelectorAll(".points");
+    scores.forEach(function(score) {
+        score.textContent = "0";
+    });
+    const roundMessage = document.querySelector(".round-message");
+    roundMessage.textContent = "- - - - - - - -";
+}
+
+const buttons = document.querySelectorAll(".choice");
 buttons.forEach(addBttnEvntListener);
+
+const resetBttn = document.querySelector(".reset");
+resetBttn.addEventListener("click", clearScoreboard);
 
 //game()
