@@ -8,7 +8,7 @@ const PAPER_BEATS_ROCK = " Paper beats Rock!";
 const ROCK_BEATS_SCISSORS = " Rock beats Scissors!";
 const SCISSORS_BEATS_PAPER = " Scissors beats Paper!";
 const USER_CHOICE_PROMPT = "Rock Paper Scissors! Please enter a choice: ";
-//const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scissors: ";
+const RETRY_CHOICE_PROMPT = "Invalid value, please choose Rock, Paper, or Scissors: ";
 let userChoice = "";
 
 function getComputerChoice(){
@@ -62,7 +62,8 @@ function playRound(playerSelection, compSelection){
 function updateGameVariables(roundResult) {
     updateScoreboard(roundResult);
     checkIfGameOver();
-    userChoice = "";
+    updateUserChoice("");
+    updateUserChoiceDisplay("");
 }
 
 function updateScoreboard(roundResult) {
@@ -111,13 +112,16 @@ function addBttnEvntListener(button) {
 function getUserChoice(event) {
     switch(event.target.id){
         case "rock":
-            userChoice = CHOICE_ROCK;
+            updateUserChoice(CHOICE_ROCK);
+            updateUserChoiceDisplay(CHOICE_ROCK);
             break;
         case "paper":
-            userChoice = CHOICE_PAPER;
+            updateUserChoice(CHOICE_PAPER);
+            updateUserChoiceDisplay(CHOICE_PAPER);
             break;
         default: 
-            userChoice = CHOICE_SCISSORS
+            updateUserChoice(CHOICE_SCISSORS);
+            updateUserChoiceDisplay(CHOICE_SCISSORS);
             break;
     }
 }
@@ -132,7 +136,8 @@ function clearScoreboard(){
     roundMessage.textContent = "- - - - - - - -";
 
     resetHeader();
-    userChoice = "";
+    updateUserChoice("");
+    updateUserChoiceDisplay("");
 }
 
 function resetHeader() {
@@ -146,11 +151,20 @@ function resetHeader() {
 }
 
 function submitChoice() {
-    if(userChoice = "")
-        alert("Choose between the three options before submitting.");
+    if(userChoice == "")
+        alert(RETRY_CHOICE_PROMPT);
     else{
         playRound(userChoice, getComputerChoice());
     }
+}
+
+function updateUserChoiceDisplay(msg) {
+    const choiceDisplay = document.querySelector(".choice-display h2");
+    choiceDisplay.textContent = "Your Choice: " + msg;
+}
+
+function updateUserChoice(choice) {
+    userChoice = choice;
 }
 
 const buttons = document.querySelectorAll(".choice");
