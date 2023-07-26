@@ -103,6 +103,21 @@ function displayWinner(userScore, compScore){
         gameMessage.textContent = "Tie Result!";
 
     header.appendChild(gameMessage);
+    disableNonResetButtons();
+}
+
+function disableNonResetButtons() {
+    const buttons = document.querySelectorAll(".non-reset");
+    buttons.forEach(function (button) {
+        button.disabled = true;
+    });
+}
+
+function enableAllButtons() {
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(function (button) {
+        button.disabled = false;
+    });
 }
 
 function addBttnEvntListener(button) {
@@ -136,6 +151,7 @@ function clearScoreboard(){
     roundMessage.textContent = "- - - - - - - -";
 
     resetHeader();
+    enableAllButtons();
     updateUserChoice("");
     updateUserChoiceDisplay("");
 }
@@ -167,12 +183,11 @@ function updateUserChoice(choice) {
     userChoice = choice;
 }
 
-const buttons = document.querySelectorAll(".choice");
-buttons.forEach(addBttnEvntListener);
+const choiceButtons = document.querySelectorAll(".choice");
+choiceButtons.forEach(addBttnEvntListener);
 
 const resetBttn = document.querySelector(".reset");
 resetBttn.addEventListener("click", clearScoreboard);
 
 const submitBttn = document.querySelector(".submit");
 submitBttn.addEventListener("click", submitChoice);
-//game()
