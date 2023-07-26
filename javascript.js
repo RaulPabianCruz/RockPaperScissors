@@ -30,6 +30,40 @@ function getComputerChoice(){
     return compChoice;
 }
 
+function getUserChoice(event) {
+    switch(event.target.id){
+        case "rock":
+            updateUserChoice(CHOICE_ROCK);
+            updateUserChoiceDisplay(CHOICE_ROCK);
+            break;
+        case "paper":
+            updateUserChoice(CHOICE_PAPER);
+            updateUserChoiceDisplay(CHOICE_PAPER);
+            break;
+        default: 
+            updateUserChoice(CHOICE_SCISSORS);
+            updateUserChoiceDisplay(CHOICE_SCISSORS);
+            break;
+    }
+}
+
+function updateUserChoice(choice) {
+    userChoice = choice;
+}
+
+function updateUserChoiceDisplay(msg) {
+    const choiceDisplay = document.querySelector(".choice-display h2");
+    choiceDisplay.textContent = "Your Choice: " + msg;
+}
+
+function submitChoice() {
+    if(userChoice == "")
+        alert(RETRY_CHOICE_PROMPT);
+    else{
+        playRound(userChoice, getComputerChoice());
+    }
+}
+
 function playRound(playerSelection, compSelection){
     let roundResult = "";
     const roundMessage = document.querySelector(".round-message");
@@ -106,42 +140,7 @@ function displayWinner(userScore, compScore){
     disableNonResetButtons();
 }
 
-function disableNonResetButtons() {
-    const buttons = document.querySelectorAll(".non-reset");
-    buttons.forEach(function (button) {
-        button.disabled = true;
-    });
-}
-
-function enableAllButtons() {
-    const buttons = document.querySelectorAll("button");
-    buttons.forEach(function (button) {
-        button.disabled = false;
-    });
-}
-
-function addBttnEvntListener(button) {
-    button.addEventListener("click", getUserChoice);
-}
-
-function getUserChoice(event) {
-    switch(event.target.id){
-        case "rock":
-            updateUserChoice(CHOICE_ROCK);
-            updateUserChoiceDisplay(CHOICE_ROCK);
-            break;
-        case "paper":
-            updateUserChoice(CHOICE_PAPER);
-            updateUserChoiceDisplay(CHOICE_PAPER);
-            break;
-        default: 
-            updateUserChoice(CHOICE_SCISSORS);
-            updateUserChoiceDisplay(CHOICE_SCISSORS);
-            break;
-    }
-}
-
-function clearScoreboard(){
+function resetScoreboard(){
     const scores = document.querySelectorAll(".points");
     scores.forEach(function(score) {
         score.textContent = "0";
@@ -166,28 +165,27 @@ function resetHeader() {
     }
 }
 
-function submitChoice() {
-    if(userChoice == "")
-        alert(RETRY_CHOICE_PROMPT);
-    else{
-        playRound(userChoice, getComputerChoice());
-    }
+function disableNonResetButtons() {
+    const buttons = document.querySelectorAll(".non-reset");
+    buttons.forEach(function (button) {
+        button.disabled = true;
+    });
 }
 
-function updateUserChoiceDisplay(msg) {
-    const choiceDisplay = document.querySelector(".choice-display h2");
-    choiceDisplay.textContent = "Your Choice: " + msg;
-}
-
-function updateUserChoice(choice) {
-    userChoice = choice;
+function enableAllButtons() {
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(function (button) {
+        button.disabled = false;
+    });
 }
 
 const choiceButtons = document.querySelectorAll(".choice");
-choiceButtons.forEach(addBttnEvntListener);
+choiceButtons.forEach(function (button) {
+    button.addEventListener("click", getUserChoice);
+});
 
 const resetBttn = document.querySelector(".reset");
-resetBttn.addEventListener("click", clearScoreboard);
+resetBttn.addEventListener("click", resetScoreboard);
 
 const submitBttn = document.querySelector(".submit");
 submitBttn.addEventListener("click", submitChoice);

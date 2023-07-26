@@ -35,7 +35,7 @@
     /*align-items: center;*/
 }
 
-button {
+.choice {
     flex: 1 1 0;
     height: 200px;
     margin: 0px 20px;
